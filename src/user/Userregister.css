@@ -1,0 +1,14 @@
+
+    .card {
+        box-shadow: 0 0 20px #625f5f7c;
+        width: 400px;
+    }
+    
+    .form-control {
+        height: 2.5rem !important;
+        
+    }
+
+    .User_head{
+        color:  #4E6376;
+    }

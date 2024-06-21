@@ -1,0 +1,17 @@
+.custom-input {
+    background-color: #4E6376;
+    color: white;
+    border-color: #4E6376;
+  }
+  
+  .custom-input::placeholder {
+    color:white;
+  }
+  
+  .custom-input:focus {
+    background-color: #4E6376;
+    color: white;
+    border-color: #3B4D5A;
+    box-shadow: 0 0 0 0.2rem rgba(78, 99, 118, 0.654);
+  }
+  

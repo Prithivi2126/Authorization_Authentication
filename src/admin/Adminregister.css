@@ -1,0 +1,21 @@
+body {
+    overflow-x: hidden;
+    background-color: #D2D3D4 !important;
+
+}
+
+.card {
+    box-shadow: 0 0 30px #625f5f7c;
+}
+
+
+.admin_form {
+    width: 350px !important;
+    background-image: repeating-linear-gradient(to right, #587873 , #96B293);
+    border-radius: 25px;
+
+}
+
+.form-control {
+    height: 3rem !important;
+}
