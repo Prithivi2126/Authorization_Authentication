@@ -4,8 +4,8 @@
 
 
 .login_form {
-  width: 350px !important;
-  background-image: repeating-linear-gradient(to right, #587873 , #96B293);
+  width: 400px !important;
+  background-image: repeating-linear-gradient(to right, #587873e1 , #96b293e7);
   border-radius: 25px;
 
 }

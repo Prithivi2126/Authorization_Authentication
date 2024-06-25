@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +6,7 @@ import './Authentication.css';
 
 const Authentication = () => {
   const navigate = useNavigate();
+
 
   const validationSchema = Yup.object().shape({
     userName: Yup.string().required('Username is required'),
@@ -21,7 +22,6 @@ const Authentication = () => {
 
   const onSubmit = (values, { setSubmitting }) => {
     const registeredUser = JSON.parse(localStorage.getItem('user'));
-
     if (
       registeredUser &&
       registeredUser.userName === values.userName &&
@@ -29,23 +29,23 @@ const Authentication = () => {
     ) {
       navigate('/admin');
     } else {
-      alert('Invalid username or password');
+      alert('Incorrect email or password. Try entering your information again.');
     }
-
     setSubmitting(false);
   };
 
   return (
     <div className="vh-100 d-flex justify-content-center align-items-center">
-      <div className="login_form p-5">
-        <h3 className="text-center mb-3 mt-2 text-white fw-bold">LOGIN</h3>
+      <div className="login_form p-3">
+        <h3 className="text-center mb-3 mt-2 text-white fw-bold">LOGIN!!</h3>
+      
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
           {({ isSubmitting }) => (
-            <Form className='p-3 '>
+            <Form className="p-4">
               <div className="text-start mt-1">
                 <Field
                   type="text"
@@ -55,7 +55,14 @@ const Authentication = () => {
                   placeholder="Username"
                   style={{ borderColor: "#ced4da" }}
                 />
-                <ErrorMessage name="userName" component="div" className="text-danger mt-1" />
+                <ErrorMessage name="userName">
+                  {(msg) => (
+                    <div className="text-white   mt-1">
+                      {msg}
+                      <span className=" fw-bold " style={{ color: 'white', marginLeft: '3px' }}>*</span>
+                    </div>
+                  )}
+                </ErrorMessage>
               </div>
 
               <div className="text-start mt-4">
@@ -67,7 +74,14 @@ const Authentication = () => {
                   placeholder="Password"
                   style={{ borderColor: "#ced4da" }}
                 />
-                <ErrorMessage name="password" component="div" className="text-danger mt-1" />
+                <ErrorMessage name="password">
+                  {(msg) => (
+                    <div className="text-white  mt-1">
+                      {msg}
+                      <span className=" fw-bold " style={{ color: 'white', marginLeft: '3px' }}>*</span>
+                    </div>
+                  )}
+                </ErrorMessage>
               </div>
 
               <div className="mt-4 mb-2">
@@ -83,6 +97,7 @@ const Authentication = () => {
             </Form>
           )}
         </Formik>
+     
       </div>
     </div>
   );

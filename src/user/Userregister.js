@@ -1,11 +1,11 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './Userregister.css';
 import axios from 'axios';
 
-const UserRegister = () => {
+const Userregister = () => {
   const navigate = useNavigate();
 
   const validationSchema = Yup.object().shape({
@@ -128,7 +128,7 @@ const UserRegister = () => {
                 <ErrorMessage name="userRole" component="div" className="text-danger" />
               </div>
 
-              <div className="mt-4 mb-2">
+              <div className="mt-4">
                 <button
                   className="btn w-100 fw-bold text-white mb-3"
                   type="submit"
@@ -141,9 +141,14 @@ const UserRegister = () => {
             </Form>
           )}
         </Formik>
+        <div className="text-center mb-2">
+          <p>
+            Already have an account? <Link to="/Authentication">Login</Link>
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
-export default UserRegister;
+export default Userregister;
