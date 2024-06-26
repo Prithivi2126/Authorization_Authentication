@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+// Authentication.js
+
+import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './Authentication.css';
 
 const Authentication = () => {
   const navigate = useNavigate();
-
 
   const validationSchema = Yup.object().shape({
     userName: Yup.string().required('Username is required'),
@@ -20,17 +22,37 @@ const Authentication = () => {
     password: '',
   };
 
-  const onSubmit = (values, { setSubmitting }) => {
-    const registeredUser = JSON.parse(localStorage.getItem('user'));
-    if (
-      registeredUser &&
-      registeredUser.userName === values.userName &&
-      registeredUser.password === values.password
-    ) {
-      navigate('/admin');
-    } else {
-      alert('Incorrect email or password. Try entering your information again.');
+  const onSubmit = async (values, { setSubmitting }) => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/auth/user/login', {
+        userName: values.userName,
+        password: values.password,
+      });
+
+      console.log('Login response:', response.data); 
+
+      if (response.data.success) {
+   
+        localStorage.setItem('loggedInUser', values.userName);
+
+        
+        localStorage.setItem('password', values.password);
+
+        localStorage.setItem('accessToken', response.data.accessToken);
+
+        if (response.data.userRole === 'ADMIN') {
+          navigate('/Admindetails');
+        } else {
+          navigate('/Userdetails');
+        }
+      } else {
+        alert('Incorrect username or password. Try entering your information again.');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('Error occurred during login. Please try again.');
     }
+
     setSubmitting(false);
   };
 
@@ -38,7 +60,7 @@ const Authentication = () => {
     <div className="vh-100 d-flex justify-content-center align-items-center">
       <div className="login_form p-3">
         <h3 className="text-center mb-3 mt-2 text-white fw-bold">LOGIN!!</h3>
-      
+
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -57,7 +79,7 @@ const Authentication = () => {
                 />
                 <ErrorMessage name="userName">
                   {(msg) => (
-                    <div className="text-white   mt-1">
+                    <div className="text-white mt-1">
                       {msg}
                       <span className=" fw-bold " style={{ color: 'white', marginLeft: '3px' }}>*</span>
                     </div>
@@ -76,7 +98,7 @@ const Authentication = () => {
                 />
                 <ErrorMessage name="password">
                   {(msg) => (
-                    <div className="text-white  mt-1">
+                    <div className="text-white mt-1">
                       {msg}
                       <span className=" fw-bold " style={{ color: 'white', marginLeft: '3px' }}>*</span>
                     </div>
@@ -97,7 +119,6 @@ const Authentication = () => {
             </Form>
           )}
         </Formik>
-     
       </div>
     </div>
   );

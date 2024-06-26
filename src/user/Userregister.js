@@ -40,7 +40,6 @@ const Userregister = () => {
     try {
       const response = await axios.post('http://localhost:8080/api/auth/user/register', values);
       console.log(response.data);
-
       localStorage.setItem('user', JSON.stringify(values));
       navigate('/Authentication');
     } catch (error) {
